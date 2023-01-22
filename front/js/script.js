@@ -4,8 +4,8 @@
 fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((objetProduits) => {
-    console.table(objetProduits);
-
+    //console.table(objetProduits);
+    
     // appel  la fonction mesKanaps pour afficher des produits
     mesKanaps(objetProduits);
   })
@@ -21,8 +21,8 @@ function mesKanaps(index) {
   // déclaration de variable de la zone d'article
   let zoneArticle = document.querySelector("#items");
   for (let article of index) {
-    /* création et ajout des zones d'articles, insertion dans l'adresse produit
-    la clé (ici _id) associé (=) à sa valeur dynamique ${article._id} */
+    /* création et ajout les zones d'articles, 
+      et les  inserer */
 
     zoneArticle.innerHTML += `<a href="./product.html?_id=${article._id}">
     <article>

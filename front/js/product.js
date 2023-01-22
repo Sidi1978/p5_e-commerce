@@ -1,5 +1,8 @@
 
 // Récupération de l'id du produit via l' URL
+var elementpanier =JSON.parse(localStorage.getItem("panierclient"));
+console.log(elementpanier);
+
 
 const params = new URLSearchParams(document.location.search); 
 const id = params.get("_id");
@@ -10,17 +13,19 @@ console.log(id);
 fetch("http://localhost:3000/api/products")
   .then((res) => res.json())
   .then((objetProduits) => {
-    // execution de la fontion lesProduits
+    // execution de la fontion mesProduits
     mesProduits(objetProduits);
+    
   })
   .catch((err) => {
-    document.querySelector(".item").innerHTML = "<h1>erreur 404</h1>";
+    document.querySelector(".item").innerHTML = "<h1>erreur 404 !</h1>";
     console.log("erreur 404, sur ressource api: " + err);
   });
 
 // déclaration objet articleClient prêt à être modifiée par les fonctions
 let articleClient = {};
 articleClient._id = id;
+let produitok =false;
 
 // fonction d'affichage des produits
 
@@ -78,8 +83,27 @@ choixQuantité.addEventListener("input", (eq) => {
 
 // conditions de validation du clic via le bouton ajouter au panier
 
+var produitsrecuperer =[];
 let choixProduit = document.querySelector("#addToCart");
 choixProduit.addEventListener("click", () => {
+  produitsrecuperer = JSON.parse(localStorage.getItem("panierclient"));
+  console.log(produitsrecuperer);
+  if (produitsrecuperer){
+     for (let element of produitsrecuperer ){
+        if (element._id === id ) {
+            let somme = parseInt(element.quantité) + parseInt(quantitéProduit);
+            if (somme >100 ) {
+                produitok =true;
+            }
+             
+            if (somme < 100 ) {
+                produitok =false;
+            }
+          
+
+        }
+      }
+  }
   //conditions de validation du bouton ajouter au panier
   if (
     // les valeurs sont créées dynamiquement au click, et à l'arrivée sur la page, 
@@ -87,13 +111,14 @@ choixProduit.addEventListener("click", () => {
     articleClient.quantité > 100 ||
     articleClient.quantité === undefined ||
     articleClient.couleur === "" ||
-    articleClient.couleur === undefined
+    articleClient.couleur === undefined ||
+    produitok
   ) {
-    // joue l'alerte
+    // appel l'alerte
     alert("Pour valider le choix de cet article, veuillez renseigner une couleur, et/ou une quantité valide entre 1 et 100");
-    // si ça passe le controle
+    // si ça passe la validation
   } else {
-    // joue panier
+    // appel fonction panier
     Panier();
     console.log("clic effectué");
     //effet visuel
@@ -105,9 +130,9 @@ choixProduit.addEventListener("click", () => {
 // Déclaration de tableaux utiles
 
 let choixProduitClient = [];
-// déclaration tableau qui sera ce qu'on récupère du local storage appelé panierStocké 
+// déclaration tableau qui sera ce qu'on récupère du local storage appelé panierclient 
 let produitsEnregistrés = [];
-// déclaration tableau qui sera un choix d'article/couleur non présent dans le panierStocké
+// déclaration tableau qui sera un choix d'article/couleur non présent dans le panierclient
 let produitsTemporaires = [];
 // déclaration tableau qui sera la concaténation des produitsEnregistrés 
 let produitsAPousser = [];
@@ -119,7 +144,7 @@ function commandPremierProduit() {
   if (produitsEnregistrés === null) {
     choixProduitClient.push(articleClient);
     console.log(articleClient);
-    return (localStorage.panierStocké = JSON.stringify(choixProduitClient));
+    return (localStorage.panierclient = JSON.stringify(choixProduitClient));
   }
 }
 
@@ -142,14 +167,15 @@ function commandAutreProduit() {
   });
   // initialise produitsTemporaires 
   produitsTemporaires = [];
-  return (localStorage.panierStocké = JSON.stringify(produitsAPousser));
+  return (localStorage.panierclient = JSON.stringify(produitsAPousser));
 }
 
 // fonction qui ajuste la quantité si le produit est déja dans le tableau, ou créait le tableau avec un premier article 
 
 function Panier() {
-  // variable qu'on récupère du local storage appelé panierStocké en json
-  produitsEnregistrés = JSON.parse(localStorage.getItem("panierStocké"));
+  // variable qu'on récupère du local storage appelé panierclient en json
+  produitsEnregistrés = JSON.parse(localStorage.getItem("panierclient"));
+  console.log(produitsEnregistrés);
   if (produitsEnregistrés) {
     for (let choix of produitsEnregistrés) {
       if (choix._id === id && choix.couleur === articleClient.couleur) {
@@ -159,7 +185,7 @@ function Panier() {
         let additionQuantité = parseInt(choix.quantité) + parseInt(quantitéProduit);
         // conversion en JSON le résultat précédent 
         choix.quantité = JSON.stringify(additionQuantité);
-        return (localStorage.panierStocké = JSON.stringify(produitsEnregistrés));
+        return (localStorage.panierclient = JSON.stringify(produitsEnregistrés));
       }
     }
     // appel fonction commandAutreProduit 
@@ -168,4 +194,8 @@ function Panier() {
   // appel fonction commandPremierProduit
   return commandPremierProduit();
 }
-//--------------------------------------------------------------------------------------------------
+//------------------------------------------------------
+
+
+
+
