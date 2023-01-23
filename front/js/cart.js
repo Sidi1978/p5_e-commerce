@@ -162,3 +162,20 @@ function suppression() {
 }
 //-------------
 // fonction qui calcule et ajout nombre total produit et coût total
+//-------------
+function totalProduit() {
+  
+  let totalArticle = 0;
+  let totalPrix = 0;
+  const cart = document.querySelectorAll(".cart__item");
+  // pour chaque élément cart
+  cart.forEach((cart) => {
+    //recuperation les quantités des produits grâce au dataset
+    totalArticle += JSON.parse(cart.dataset.quantité);
+    totalPrix += cart.dataset.quantité * cart.dataset.prix;
+  });
+  // positionnement sur l'endroit d'affichage nombre d'article
+  document.getElementById("totalQuantity").textContent = totalArticle;
+  document.getElementById("totalPrice").textContent = totalPrix;
+}
+//------------ fin de fonction totalProduit
