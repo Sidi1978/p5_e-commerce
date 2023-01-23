@@ -87,3 +87,35 @@ function affiche(indexé) {
   // fonction qui totalise les produis  
   totalProduit();
 }
+
+//...........
+// fonctio modification dynamiquement les quantités des produits dans panier
+//----------
+function modifQuantité() {
+  const cart = document.querySelectorAll(".cart__item");
+  // On écoute ce qui se passe dans itemQuantity de l'article concerné
+  cart.forEach((cart) => {
+    cart.addEventListener("change", (eq) => {
+      //var element = JSON.parse(localStorage.getItem("panierStocké"));
+      for (article of elementpanier)
+        if (article._id === cart.dataset.id && cart.dataset.couleur === article.couleur ) 
+        {
+          let somme = parseInt(eq.target.value);
+          console.log(somme);
+          if (somme < 101 && somme > 0){
+            article.quantité = eq.target.value;
+            localStorage.panierStocké = JSON.stringify(elementpanier);
+            // on met à jour le dataset quantité
+            cart.dataset.quantité = eq.target.value;
+            // on appel la fonction pour actualiser les données
+            totalProduit();
+          }
+          else{
+            alert("choisissez une valeur entre 1 et 100")
+          }
+          
+          
+        }
+    });
+  });
+}
