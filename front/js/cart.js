@@ -84,5 +84,6 @@ function affiche(indexé) {
     </div>
   </article>`
     ).join(""); 
+  // fonction qui totalise les produis  
   totalProduit();
 }
