@@ -56,3 +56,33 @@ function affichagePanier(index) {
   
 }
 //---------
+//Fonction d'affichage de :  panier
+//----------
+function affiche(indexé) {
+  // on déclare et on pointe la zone d'affichage
+  let zonePanier = document.querySelector("#cart__items");
+  zonePanier.innerHTML += indexé.map((choix) => 
+  `<article class="cart__item" data-id="${choix._id}" data-couleur="${choix.couleur}" data-quantité="${choix.quantité}" data-prix="${choix.prix}"> 
+    <div class="cart__item__img">
+      <img src="${choix.image}" alt="${choix.alt}">
+    </div>
+    <div class="cart__item__content">
+      <div class="cart__item__content__titlePrice">
+        <h2>${choix.name}</h2>
+        <span>couleur : ${choix.couleur}</span>
+        <p data-prix="${choix.prix}">${choix.prix} €</p>
+      </div>
+      <div class="cart__item__content__settings">
+        <div class="cart__item__content__settings__quantity">
+          <p>Qté : </p>
+          <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${choix.quantité}">
+        </div>
+        <div class="cart__item__content__settings__delete">
+          <p class="deleteItem" data-id="${choix._id}" data-couleur="${choix.couleur}">Supprimer</p>
+        </div>
+      </div>
+    </div>
+  </article>`
+    ).join(""); 
+  totalProduit();
+}
