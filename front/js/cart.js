@@ -161,3 +161,4 @@ function suppression() {
   });
 }
 //-------------
+// fonction qui calcule et ajout nombre total produit et coût total
