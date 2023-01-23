@@ -121,3 +121,43 @@ function modifQuantité() {
 }
 
 //...................
+
+// fonction supression d'un article dynamiquement du panier et de de l'affichage
+//--------------
+function suppression() {
+  
+  const cartdelete = document.querySelectorAll(".cart__item .deleteItem");
+  cartdelete.forEach((cartdelete) => {
+    // On écoute s'il y a un clic dans l'article concerné
+    cartdelete.addEventListener("click", () => {
+      // appel de la ressource du local storage
+      let panier = JSON.parse(localStorage.getItem("panierclient"));
+      for (let d = 0, c = panier.length; d < c; d++)
+        if (
+          panier[d]._id === cartdelete.dataset.id &&
+          panier[d].couleur === cartdelete.dataset.couleur
+        ) {
+          // déclaration de variable utile pour la suppression
+          const num = [d];
+          // création d'un tableau miroir, voir mutation
+          let nouveauPanier = JSON.parse(localStorage.getItem("panierclient"));
+          //suppression de 1 élément à l'indice num
+          nouveauPanier.splice(num, 1);
+          //affichage informatif
+          if (nouveauPanier && nouveauPanier.length == 0) {
+            // si il n'y a pas de panier on créait un H1 informatif et quantité appropriées
+            document.querySelector("#totalQuantity").innerHTML = "0";
+            document.querySelector("#totalPrice").innerHTML = "0";
+            document.querySelector("h1").innerHTML =
+              "Vous n'avez pas d'article dans votre panier";
+          }
+          // on renvoit le nouveau panier converti dans le local storage et on appel la fonction
+          localStorage.panierclient = JSON.stringify(nouveauPanier);
+          totalProduit(); 
+          // on recharge la page qui s'affiche sans le produit grace au nouveau panier
+          return location.reload();
+        }
+    });
+  });
+}
+//-------------
