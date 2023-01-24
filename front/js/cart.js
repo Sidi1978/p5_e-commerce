@@ -336,3 +336,27 @@ function couleurRegex(regSearch, valeurEcoute, inputAction) {
   }
 }
 //---------------------------------------
+// fonction d'affichage sous les inputs sauf l'input email
+//-------------------------------
+function texteInfo(regex, pointage, zoneEcoute) {
+      
+  zoneEcoute.addEventListener("input", (e) => {
+  valeur = e.target.value;
+  index = valeur.search(regex);
+
+  if (valeur === "" && index != 0) {
+    document.querySelector(pointage).textContent = "Veuillez renseigner ce champ.";
+    document.querySelector(pointage).style.color = "white";
+    
+  } else if (valeur !== "" && index != 0) {
+    document.querySelector(pointage).innerHTML = "Reformulez cette donnée";
+    document.querySelector(pointage).style.color = "white";
+    // le reste des cas 
+  } else {
+  document.querySelector(pointage).innerHTML = "Caratères acceptés pour ce champ.";
+  document.querySelector(pointage).style.color = "white";
+  }
+});
+
+}
+//-----------------------------------
