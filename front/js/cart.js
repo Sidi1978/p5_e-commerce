@@ -391,3 +391,20 @@ commande.addEventListener("click", (e) => {
 });
 
 //-----------------------------
+// fonction pour recuperer des id et les mettre dans un tableau
+//------------------------------
+
+let panierId = [];
+function tableauId() {
+  // appel des ressources
+   var panier = JSON.parse(localStorage.getItem("panierStocké"));
+   if (elementpanier && elementpanier.length > 0) {
+     for (let indice of elementpanier) {
+     panierId.push(indice._id);
+  }
+} else {
+  console.log("le panier est vide");
+  document.querySelector("#order").setAttribute("value", "Panier vide !");
+}
+}
+//------------------------------------
