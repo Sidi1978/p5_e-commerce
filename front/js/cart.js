@@ -408,3 +408,21 @@ function tableauId() {
 }
 }
 //------------------------------------
+// récupération les informations de client et panier avant la transformation
+//------------------------------------
+let contactRef;
+let commandeFinale;
+function paquet() {
+  contactRef = JSON.parse(localStorage.getItem("contactClient"));
+  commandeFinale = {
+    contact: {
+      firstName: contactRef.firstName,
+      lastName: contactRef.lastName,
+      address: contactRef.address,
+      city: contactRef.city,
+      email: contactRef.email,
+    },
+    products: panierId,
+  };
+}
+//-----------------------------------
