@@ -50,8 +50,8 @@ function affichagePanier(index) {
       "Vous n'avez pas d'article dans votre panier";
   }
   // appel ses fontion  pour etre a l'ecoute
-  //suppression();
-  //modifQuantité();
+  suppression();
+  modifQuantité();
   
   
 }
@@ -426,3 +426,31 @@ function paquet() {
   };
 }
 //-----------------------------------
+// fonction  validation  envoi
+//-----------------------------------
+function envoiPaquet() {
+  tableauId();
+  paquet();
+  console.log(commandeFinale);
+  let somme = contactRef.regexNormal + contactRef.regexAdresse + contactRef.regexEmail;
+  if (panierId.length != 0 && somme === 5) {
+    // envoi à la ressource api
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(commandeFinale),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // envoyé à la page confirmation, autre écriture de la valeur "./confirmation.html?commande=${data.orderId}"
+        window.location.href = `confirmation.html?commande=${data.orderId}`;
+      })
+      .catch(function (err) {
+        console.log(err);
+        alert("erreur");
+      });
+  }
+}
