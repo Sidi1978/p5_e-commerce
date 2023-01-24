@@ -211,3 +211,31 @@ let regexLettre = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæ
 let regexChiffreLettre = /^[a-z0-9áàâäãåçéèêëíìîïñóòôöõúùûüýÿæœ\s-]{1,60}$/i;
 let regValideEmail = /^[a-z0-9æœ.!#$%&’*+/=?^_`{|}~"(),:;<>@[\]-]{1,60}$/i;
 let regMatchEmail = /^[a-zA-Z0-9æœ.!#$%&’*+/=?^_`{|}~"(),:;<>@[\]-]+@([\w-]+\.)+[\w-]{2,4}$/i;
+
+//------------------------------
+
+regexTexte.forEach((regexTexte) =>
+  regexTexte.addEventListener("input", (e) => {
+    valeur = e.target.value;
+    // regNormal sera la valeur de la réponse regex, 0 ou -1
+    let regNormal = valeur.search(regexLettre);
+    if (regNormal === 0) {
+        contactClient.firstName = prenom.value;
+        contactClient.lastName = nom.value;
+        contactClient.city = ville.value;
+    }
+    if (
+        contactClient.city !== "" &&
+        contactClient.lastName !== "" &&
+        contactClient.firstName !== "" &&
+        regNormal === 0
+    ) {
+        contactClient.regexNormal = 3;
+    } else {
+        contactClient.regexNormal = 0;
+    }
+    localStorage.contactClient = JSON.stringify(contactClient);
+    couleurRegex(regNormal, valeur, regexTexte);
+    valideClic();
+  })
+);
