@@ -379,3 +379,15 @@ function valideClic() {
   }
 }
 //------------------------------
+
+// Envoi  la commande
+//-----------------------------
+
+commande.addEventListener("click", (e) => {
+  // empeche de recharger la page on prévient le reload du bouton
+  e.preventDefault();
+  valideClic();
+  envoiPaquet();
+});
+
+//-----------------------------
