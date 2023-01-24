@@ -359,4 +359,23 @@ function texteInfo(regex, pointage, zoneEcoute) {
 });
 
 }
+
 //-----------------------------------
+// Fonction de validation accés au clic du bouton du formulaire
+//-----------------------------------
+
+let commande = document.querySelector("#order");
+// la fonction est pour valider le clic de commande 
+function valideClic() {
+  let contactRef = JSON.parse(localStorage.getItem("contactClient"));
+  let somme =
+    contactRef.regexNormal + contactRef.regexAdresse + contactRef.regexEmail;
+  if (somme === 5) {
+    commande.removeAttribute("disabled", "disabled");
+    document.querySelector("#order").setAttribute("value", "Commander !");
+  } else {
+    commande.setAttribute("disabled", "disabled");
+    document.querySelector("#order").setAttribute("value", "Remplir le formulaire");
+  }
+}
+//------------------------------
