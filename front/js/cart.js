@@ -179,3 +179,29 @@ function totalProduit() {
   document.getElementById("totalPrice").textContent = totalPrix;
 }
 //------------ fin de fonction totalProduit
+
+//  formulaire
+//------------//
+// les infos du client seront stockées dans ce tableau pour la commande sur page panier
+
+var contactClient = {};
+localStorage.contactClient = JSON.stringify(contactClient);
+// on pointe les input prenom nom  et ville
+var prenom = document.querySelector("#firstName");
+prenom.classList.add("regex_texte");
+var nom = document.querySelector("#lastName");
+nom.classList.add("regex_texte");
+var ville = document.querySelector("#city");
+ville.classList.add("regex_texte");
+// on pointe l'input adresse
+var adresse = document.querySelector("#address");
+adresse.classList.add("regex_adresse");
+// on pointe l'input email
+var email = document.querySelector("#email");
+email.classList.add("regex_email");
+// on pointe les élément qui ont la classe .regex_texte
+var regexTexte = document.querySelectorAll(".regex_texte");
+// modification du type de l'input type email à text à cause d'un comportement de l'espace blanc non voulu vis à vis de la regex 
+document.querySelector("#email").setAttribute("type", "text");
+
+//-----------//
