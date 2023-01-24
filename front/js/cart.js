@@ -239,3 +239,35 @@ regexTexte.forEach((regexTexte) =>
     valideClic();
   })
 );
+
+//---------//
+// le champ ecouté avec la regex regexLettre et réagir,  grâce a  texteInfo,
+//---------//
+texteInfo(regexLettre, "#firstNameErrorMsg", prenom);
+texteInfo(regexLettre, "#lastNameErrorMsg", nom);
+texteInfo(regexLettre, "#cityErrorMsg", ville);
+//--------//
+// pour la sécurité du clic 
+//--------//
+
+  let regexAdresse = document.querySelector(".regex_adresse");
+  regexAdresse.addEventListener("input", (e) => {
+    valeur = e.target.value;
+    // regNormal sera la valeur de la réponse regex, 0 ou -1
+    let regAdresse = valeur.search(regexChiffreLettre);
+    if (regAdresse == 0) {
+      contactClient.address = adresse.value;
+    }
+    if (contactClient.address !== "" && regAdresse === 0) {
+      contactClient.regexAdresse = 1;
+    } else {
+      contactClient.regexAdresse = 0;
+    }
+    localStorage.contactClient = JSON.stringify(contactClient);
+    couleurRegex(regAdresse, valeur, regexAdresse);
+    valideClic();
+  });
+
+//--------//
+texteInfo(regexChiffreLettre, "#addressErrorMsg", adresse);
+//--------------------------
