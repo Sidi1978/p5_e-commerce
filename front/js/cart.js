@@ -271,3 +271,48 @@ texteInfo(regexLettre, "#cityErrorMsg", ville);
 //--------//
 texteInfo(regexChiffreLettre, "#addressErrorMsg", adresse);
 //--------------------------
+// Ecouter et attribuer de point pour la sécurité du clic 
+//------------------------
+
+let regexEmail = document.querySelector(".regex_email");
+regexEmail.addEventListener("input", (e) => {
+  valeur = e.target.value;
+  let regMatch = valeur.match(regMatchEmail);
+  let regValide = valeur.search(regValideEmail);
+  if (regValide === 0 && regMatch !== null) {
+    contactClient.email = email.value;
+    contactClient.regexEmail = 1;
+  } else {
+    contactClient.regexEmail = 0;
+  }
+  localStorage.contactClient = JSON.stringify(contactClient);
+  couleurRegex(regValide, valeur, regexEmail);
+  valideClic();
+});
+
+//-------------//
+// texte sous le champ email
+//-------------//
+
+email.addEventListener("input", (e) => {
+  valeur = e.target.value;
+  let regMatch = valeur.match(regMatchEmail);
+  let regValide = valeur.search(regValideEmail);
+  if (valeur === "" && regMatch === null) {
+    document.querySelector("#emailErrorMsg").textContent = "Veuillez renseigner votre email.";
+    document.querySelector("#emailErrorMsg").style.color = "white";
+    
+  } else if ( regValide !== 0) {
+    document.querySelector("#emailErrorMsg").innerHTML = "Caractère non valide";
+    document.querySelector("#emailErrorMsg").style.color = "white";
+    // reste des cas
+  } else if (valeur != "" && regMatch == null) {
+    document.querySelector("#emailErrorMsg").innerHTML = "Caratères acceptés pour ce champ. Forme email pas encore conforme";
+    document.querySelector("#emailErrorMsg").style.color = "white";
+  } else {
+    document.querySelector("#emailErrorMsg").innerHTML = "Forme email conforme.";
+    document.querySelector("#emailErrorMsg").style.color = "white";
+  }
+});
+
+//-----------------------------
