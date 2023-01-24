@@ -316,3 +316,23 @@ email.addEventListener("input", (e) => {
 });
 
 //-----------------------------
+// fonction couleur Regex pour modifier la couleur de l'input,
+//---------------//
+
+let valeurEcoute = "";
+// fonction à 3 arguments réutilisable, la regex, la valeur d'écoute, et la réponse à l'écoute
+function couleurRegex(regSearch, valeurEcoute, inputAction) {
+  if (valeurEcoute === "" && regSearch != 0) {
+    inputAction.style.backgroundColor = "white";
+    inputAction.style.color = "black";
+    
+  } else if (valeurEcoute !== "" && regSearch != 0) {
+    inputAction.style.backgroundColor = "rgb(220, 50, 50)";
+    inputAction.style.color = "white";
+    //  le reste des cas 
+  } else {
+    inputAction.style.backgroundColor = "rgb(0, 138, 0)";
+    inputAction.style.color = "white";
+  }
+}
+//---------------------------------------
